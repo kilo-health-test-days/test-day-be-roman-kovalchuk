@@ -22,3 +22,26 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Services\ProvidersChain: ~
+
+#    _instanceof:
+#        App\Service\ProviderInterface:
+#            tags: [ 'app.message_provider' ]
+
+#    App\MessageHandler\MessageHandler:
+#        arguments:
+#            $providers: !tagged_iterator app.message_provider
+
+    App\Service\Providers\AirshipProvider:
+        arguments:
+            $enabled: '%env(AIRSHIP_ENABLED)%'
+            $appKey: '%env(AIRSHIP_APP_KEY)%'
+            $masterSecret: '%env(AIRSHIP_MASTER_SECRET)%'
+
+    App\Service\Providers\TwillioProvider:
+        arguments:
+            $enabled: '%env(TWILLIO_ENABLED)%'
+            $accountSID: '%env(TWILLIO_ACCOUNT_SID)%'
+            $authToken: '%env(TWILLIO_AUTH_TOKEN)%'
+            $senderPhoneNumber: '%env(TWILLIO_PHONE_NUMBER)%'
